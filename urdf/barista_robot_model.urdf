@@ -42,7 +42,7 @@
   </link>
 
   <joint name="joint_left_wheel" type="continuous">
-    <origin rpy="0 0 0" xyz="0 0.15 -0.0573"/>
+    <origin rpy="0 0 0" xyz="0 0.15 -0.0623"/>
     <child link="left_wheel"/>
     <parent link="base_link"/>
     <axis rpy="0 0 0" xyz="0 1 0"/>
@@ -72,7 +72,7 @@
   </link>
 
   <joint name="joint_right_wheel" type="continuous">  
-    <origin rpy="0 0 0" xyz="0 -0.15 -0.0573"/>
+    <origin rpy="0 0 0" xyz="0 -0.15 -0.0623"/>
     <child link="right_wheel"/>
     <parent link="base_link"/>
     <axis rpy="0 0 0" xyz="0 1 0"/>
@@ -103,7 +103,7 @@
   </link>
 
   <joint name="front_yaw_joint" type="continuous">
-    <origin rpy="0 0 0" xyz="0.15 0 -0.0775" />
+    <origin rpy="0 0 0" xyz="0.15 0 -0.0875" />
     <parent link="base_link" />
     <child link="front_yaw_link" />
     <axis xyz="0 0 1" />
@@ -193,7 +193,7 @@
   </link>
 
   <joint name="back_yaw_joint" type="continuous">
-    <origin rpy="0 0 0" xyz="-0.15 0 -0.0775" />
+    <origin rpy="0 0 0" xyz="-0.15 0 -0.0875" />
     <parent link="base_link" />
     <child link="back_yaw_link" />
     <axis xyz="0 0 1" />
