@@ -32,6 +32,7 @@ install(
 	rviz
 	worlds
 	models
+	meshes
   DESTINATION
     share/${PROJECT_NAME}/
 )
