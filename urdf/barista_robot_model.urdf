@@ -259,4 +259,139 @@
     <dynamics damping="0.0" friction="0.1"/>
   </joint>
 
+   <!-- Standoff 1 -->
+  <link name="standoff_1">
+    <visual>
+      <origin xyz="0 0 0.11"/>
+      <geometry>
+        <cylinder length="0.22" radius="0.01"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.11"/>
+      <geometry>
+        <cylinder length="0.22" radius="0.01"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.05"/>
+      <origin xyz="0 0 0.11" rpy="0 0 0"/>
+      <inertia ixx="0.0002029" ixy="0.0" ixz="0.0" iyy="0.0002029" iyz="0.0" izz="0.0000025"/>
+    </inertial>
+  </link>
+
+  <joint name="joint_standoff_1" type="fixed">
+    <origin xyz="0.1 0.1 0.0775" />
+    <parent link="base_link"/>
+    <child link="standoff_1"/>
+  </joint>
+
+   <!-- Standoff 2 -->
+  <link name="standoff_2">
+    <visual>
+      <origin xyz="0 0 0.11"/>
+      <geometry>
+        <cylinder length="0.22" radius="0.01"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.11"/>
+      <geometry>
+        <cylinder length="0.22" radius="0.01"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.05"/>
+      <origin xyz="0 0 0.11" rpy="0 0 0"/>
+      <inertia ixx="0.0002029" ixy="0.0" ixz="0.0" iyy="0.0002029" iyz="0.0" izz="0.0000025"/>
+    </inertial>
+  </link>
+
+  <joint name="joint_standoff_2" type="fixed">
+    <origin xyz="0.1 -0.1 0.0775" />
+    <parent link="base_link"/>
+    <child link="standoff_2"/>
+  </joint>
+
+   <!-- Standoff 3 -->
+  <link name="standoff_3">
+    <visual>
+      <origin xyz="0 0 0.11"/>
+      <geometry>
+        <cylinder length="0.22" radius="0.01"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.11"/>
+      <geometry>
+        <cylinder length="0.22" radius="0.01"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.05"/>
+      <origin xyz="0 0 0.11" rpy="0 0 0"/>
+      <inertia ixx="0.0002029" ixy="0.0" ixz="0.0" iyy="0.0002029" iyz="0.0" izz="0.0000025"/>
+    </inertial>
+  </link>
+
+  <joint name="joint_standoff_3" type="fixed">
+    <origin xyz="-0.1 -0.1 0.0775" />
+    <parent link="base_link"/>
+    <child link="standoff_3"/>
+  </joint>
+
+   <!-- Standoff 4 -->
+  <link name="standoff_4">
+    <visual>
+      <origin xyz="0 0 0.11"/>
+      <geometry>
+        <cylinder length="0.22" radius="0.01"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.11"/>
+      <geometry>
+        <cylinder length="0.22" radius="0.01"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.05"/>
+      <origin xyz="0 0 0.11" rpy="0 0 0"/>
+      <inertia ixx="0.0002029" ixy="0.0" ixz="0.0" iyy="0.0002029" iyz="0.0" izz="0.0000025"/>
+    </inertial>
+  </link>
+
+  <joint name="joint_standoff_4" type="fixed">
+    <origin xyz="-0.1 0.1 0.0775" />
+    <parent link="base_link"/>
+    <child link="standoff_4"/>
+  </joint>
+
+  <!-- Tray -->
+  <link name="tray">
+    <visual>
+      <origin xyz="0 0 0.045"/>
+      <geometry>
+        <cylinder length="0.09" radius="0.16"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.045"/>
+      <geometry>
+        <cylinder length="0.09" radius="0.16"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0.045"/>
+      <mass value="0.3"/>
+      <inertia ixx="0.0021225" ixy="0.0" ixz="0.0" iyy="0.0021225" iyz="0.0" izz="0.00384"/>
+    </inertial>
+  </link>
+  
+  <joint name="joint_tray" type="fixed">
+    <origin xyz="0 0 0.2975"/>
+    <parent link="base_link"/>
+    <child link="tray"/>
+  </joint>
+
 </robot>
