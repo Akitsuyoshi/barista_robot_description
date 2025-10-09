@@ -5,6 +5,7 @@ from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
 from launch.actions import IncludeLaunchDescription
+from launch.substitutions import LaunchConfiguration
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import Command
 from launch_ros.actions import Node
@@ -67,11 +68,11 @@ def generate_launch_description():
                    ]
     )
 
+
     print("Fetching XACRO ==>")
     xacro_urdf_file = os.path.join(pkg_barista_robot, "xacro", xacro_file)
+    include_laser = LaunchConfiguration('include_laser')
     # Convert xacro file into urdf
-    doc = xacro.parse(open(xacro_urdf_file))
-    xacro.process_doc(doc)
 
     # Robot State Publisher
     robot_state_publisher_node = Node(
@@ -79,7 +80,7 @@ def generate_launch_description():
         executable='robot_state_publisher',
         name='robot_state_publisher',
         emulate_tty=True,
-        parameters=[{'use_sim_time': True, 'robot_description':  doc.toxml()}],
+        parameters=[{'use_sim_time': True, 'robot_description':  Command(['xacro ', xacro_urdf_file, ' include_laser:=', include_laser])}],
         output="screen"
     )
 
@@ -103,8 +104,12 @@ def generate_launch_description():
                 default_value=[os.path.join(pkg_barista_robot, 'worlds', 'empty.world'), ''], 
                 description='SDF world file'),
             gazebo,
-            spawn_robot,
+            DeclareLaunchArgument(
+                'include_laser', 
+                default_value='true', 
+                description='Include laser scanner'),
             robot_state_publisher_node,
+            spawn_robot,
             rviz_node
         ]
     )
