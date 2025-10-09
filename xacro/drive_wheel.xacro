@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="my_box_bot">
+  <xacro:macro name="wheel" params="wheel_name joint_origin">
+    <link name="${wheel_name}">      
+      <visual>
+        <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
+        <geometry>
+          <cylinder length="0.0206" radius="0.0352"/>
+        </geometry>
+        <material name="black" />
+      </visual>
+      <collision>
+        <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
+        <geometry>
+          <cylinder length="0.0206" radius="0.0352"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
+        <mass value="0.05"/>
+        <inertia ixx="0.00001725616667" ixy="0" ixz="0" iyy="0.00001725616667" iyz="0" izz="0.000030976"/>
+      </inertial>
+    </link>
+    <joint name="joint_${wheel_name}" type="continuous">  
+      <origin rpy="0 0 0" xyz="${joint_origin}"/>
+      <child link="${wheel_name}"/>
+      <parent link="base_link"/>
+      <axis rpy="0 0 0" xyz="0 1 0"/>
+      <limit effort="10000" velocity="1000"/>
+      <joint_properties damping="1.0" friction="1.0"/>
+    </joint>
+  </xacro:macro>
+</robot>

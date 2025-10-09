@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="barista_robot">
 
+  <xacro:include filename="$(find barista_robot_description)/xacro/drive_wheel.xacro" />
+  <xacro:include filename="$(find barista_robot_description)/xacro/caster_wheel.xacro" />
+
   <gazebo reference="base_link">
     <material>Gazebo/Blue</material>
   </gazebo>
@@ -118,252 +121,17 @@
   </link>
 
   <!-- Wheel Left -->
-  <link name="left_wheel">      
-    <visual>
-      <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
-      <geometry>
-        <cylinder length="0.0206" radius="0.0352"/>
-      </geometry>
-      <material name="black" />
-    </visual>
-    <collision>
-      <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
-      <geometry>
-        <cylinder length="0.0206" radius="0.0352"/>
-      </geometry>
-    </collision>
-    <inertial>
-      <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
-      <mass value="0.05"/>
-      <inertia ixx="0.00001725616667" ixy="0" ixz="0" iyy="0.00001725616667" iyz="0" izz="0.000030976"/>
-    </inertial>
-  </link>
-
-  <joint name="joint_left_wheel" type="continuous">
-    <origin rpy="0 0 0" xyz="0 0.15 -0.0623"/>
-    <child link="left_wheel"/>
-    <parent link="base_link"/>
-    <axis rpy="0 0 0" xyz="0 1 0"/>
-    <limit effort="10000" velocity="1000"/>
-    <joint_properties damping="1.0" friction="1.0"/>
-  </joint>
+  <xacro:wheel wheel_name="left_wheel" joint_origin="0 0.15 -0.0623"/>
 
   <!-- Wheel Right -->
-  <link name="right_wheel">      
-    <visual>
-      <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
-      <geometry>
-        <cylinder length="0.0206" radius="0.0352"/>
-      </geometry>
-      <material name="black" />
-    </visual>
-    <collision>
-      <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
-      <geometry>
-        <cylinder length="0.0206" radius="0.0352"/>
-      </geometry>
-    </collision>
-    <inertial>
-      <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
-      <mass value="0.05"/>
-      <inertia ixx="0.00001725616667" ixy="0" ixz="0" iyy="0.00001725616667" iyz="0" izz="0.000030976"/>
-    </inertial>
-  </link>
-
-  <joint name="joint_right_wheel" type="continuous">  
-    <origin rpy="0 0 0" xyz="0 -0.15 -0.0623"/>
-    <child link="right_wheel"/>
-    <parent link="base_link"/>
-    <axis rpy="0 0 0" xyz="0 1 0"/>
-    <limit effort="10000" velocity="1000"/>
-    <joint_properties damping="1.0" friction="1.0"/>
-  </joint>
-
+  <xacro:wheel wheel_name="right_wheel" joint_origin="0 -0.15 -0.0623" />
 
   <!-- Caster Wheel Front -->
-  <link name="front_yaw_link">
-    <visual>
-      <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
-      <geometry>          
-        <cylinder length="0.001" radius="0.0045000000000000005"/>
-      </geometry>
-      <material name="blue" />
-    </visual>
-    <collision>
-      <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
-      <geometry>
-        <cylinder length="0.001" radius="0.0045000000000000005"/>
-      </geometry>
-    </collision>
-    <inertial>
-        <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
-        <mass value="0.001"/>
-        <inertia ixx="5.145833333333334e-09" ixy="0" ixz="0" iyy="5.145833333333334e-09" iyz="0" izz="1.0125000000000003e-08"/>
-    </inertial>
-  </link>
-
-  <joint name="front_yaw_joint" type="continuous">
-    <origin rpy="0 0 0" xyz="0.15 0 -0.0875" />
-    <parent link="base_link" />
-    <child link="front_yaw_link" />
-    <axis xyz="0 0 1" />
-    <limit effort="1000.0" velocity="100.0" />
-    <dynamics damping="0.0" friction="0.1"/>
-  </joint>
-
-  <link name="front_roll_link">
-    <visual>
-      <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
-      <geometry>
-        <cylinder length="0.001" radius="0.0045000000000000005"/>
-      </geometry>
-      <material name="red" />
-    </visual>
-    <collision>
-      <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
-      <geometry>
-        <cylinder length="0.001" radius="0.0045000000000000005"/>
-      </geometry>
-    </collision>
-    <inertial>
-        <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
-        <mass value="0.001"/>
-        <inertia ixx="5.145833333333334e-09" ixy="0" ixz="0" iyy="5.145833333333334e-09" iyz="0" izz="1.0125000000000003e-08"/>
-    </inertial>
-  </link>
-
-  <joint name="front_roll_joint" type="continuous">
-    <origin rpy="0 0 0" xyz="0 0 0" />
-    <parent link="front_yaw_link" />
-    <child link="front_roll_link" />
-    <axis xyz="1 0 0" />
-    <limit effort="1000.0" velocity="100.0" />
-    <dynamics damping="0.0" friction="0.1"/>
-  </joint>
-
-  <link name="front_pitch_link">
-    <visual>
-      <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
-      <geometry>
-        <sphere radius="0.010"/>
-      </geometry>
-      <material name="green" />
-    </visual>
-
-    <collision>
-      <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
-      <geometry>
-        <sphere radius="0.010"/>
-      </geometry>
-    </collision>
-
-    <inertial>
-      <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
-      <mass value="0.001"/>
-      <inertia ixx="4e-08" ixy="0" ixz="0" iyy="4e-08" iyz="0" izz="4e-08"/>
-    </inertial>
-  </link>
-
-  <joint name="front_pitch_joint" type="continuous">
-    <origin rpy="0 0 0" xyz="0 0 0" />
-    <parent link="front_roll_link" />
-    <child link="front_pitch_link" />
-    <axis xyz="0 1 0" />
-    <limit effort="1000.0" velocity="100.0" />
-    <dynamics damping="0.0" friction="0.1"/>
-  </joint>
-
-<!-- Caster Wheel Back -->
-  <link name="back_yaw_link">
-    <visual>
-      <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
-      <geometry>
-        <cylinder length="0.001" radius="0.0045000000000000005"/>
-      </geometry>
-      <material name="blue" />
-    </visual>
-    <collision>
-      <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
-      <geometry>
-        <cylinder length="0.001" radius="0.0045000000000000005"/>
-      </geometry>
-    </collision>
-    <inertial>
-        <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
-        <mass value="0.001"/>
-        <inertia ixx="5.145833333333334e-09" ixy="0" ixz="0" iyy="5.145833333333334e-09" iyz="0" izz="1.0125000000000003e-08"/>
-    </inertial>
-  </link>
-
-  <joint name="back_yaw_joint" type="continuous">
-    <origin rpy="0 0 0" xyz="-0.15 0 -0.0875" />
-    <parent link="base_link" />
-    <child link="back_yaw_link" />
-    <axis xyz="0 0 1" />
-    <limit effort="1000.0" velocity="100.0" />
-    <dynamics damping="0.0" friction="0.1"/>
-  </joint>
-
-  <link name="back_roll_link">
-    <visual>
-      <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
-      <geometry>
-        <cylinder length="0.001" radius="0.0045000000000000005"/>
-      </geometry>
-      <material name="red" />
-    </visual>
-    <collision>
-      <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
-      <geometry>
-        <cylinder length="0.001" radius="0.0045000000000000005"/>
-      </geometry>
-    </collision>
-    <inertial>
-        <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
-        <mass value="0.001"/>
-        <inertia ixx="5.145833333333334e-09" ixy="0" ixz="0" iyy="5.145833333333334e-09" iyz="0" izz="1.0125000000000003e-08"/>
-    </inertial>
-  </link>
-
-  <joint name="back_roll_joint" type="continuous">
-    <origin rpy="0 0 0" xyz="0 0 0" />
-    <parent link="back_yaw_link" />
-    <child link="back_roll_link" />
-    <axis xyz="1 0 0" />
-    <limit effort="1000.0" velocity="100.0" />
-    <dynamics damping="0.0" friction="0.1"/>
-  </joint>
-
-  <link name="back_pitch_link">
-    <visual>
-      <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
-      <geometry>
-        <sphere radius="0.010"/>
-      </geometry>
-      <material name="green" />
-    </visual>
-    <collision>
-      <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
-      <geometry>
-        <sphere radius="0.010"/>
-      </geometry>
-    </collision>
-    <inertial>
-        <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
-        <mass value="0.001"/>
-        <inertia ixx="4e-08" ixy="0" ixz="0" iyy="4e-08" iyz="0" izz="4e-08"/>
-    </inertial>
-  </link>
-
-  <joint name="back_pitch_joint" type="continuous">
-    <origin rpy="0 0 0" xyz="0 0 0" />
-    <parent link="back_roll_link" />
-    <child link="back_pitch_link" />
-    <axis xyz="0 1 0" />
-    <limit effort="1000.0" velocity="100.0" />
-    <dynamics damping="0.0" friction="0.1"/>
-  </joint>
-
+  <xacro:caster caster_position="front" joint_yaw_origin="0.15 0 -0.0875" />
+  
+  <!-- Caster Wheel Back -->
+  <xacro:caster caster_position="back" joint_yaw_origin="-0.15 0 -0.0875" />
+  
    <!-- Standoff 1 -->
   <link name="standoff_1">
     <visual>
