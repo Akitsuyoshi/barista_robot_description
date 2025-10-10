@@ -9,15 +9,15 @@
         </geometry>
       </visual>
       <collision>
-         <origin rpy="0 0 0" xyz="0 0 0.204"/>
+         <origin rpy="0 0 0" xyz="0 0 0.035"/>
         <geometry>
-          <cylinder length="0.0408" radius="0.037493"/>
+          <cylinder length="0.07" radius="0.025"/>
         </geometry>
       </collision>
       <inertial>
-        <mass value="0.01"/>
-        <origin rpy="0 0 0" xyz="0 0 0.204"/>
-        <inertia ixx="6.066578520833334e-06" ixy="0" ixz="0" iyy="6.072950163333333e-06" iyz="0" izz="9.365128684166666e-06"/>
+        <mass value="0.015"/>
+        <origin rpy="0 0 0" xyz="0 0 0.035"/>
+        <inertia ixx="8.47e-06" ixy="0" ixz="0" iyy="8.47e-06" iyz="0" izz="8.47e-06"/>
       </inertial>
     </link>
   
@@ -35,12 +35,12 @@
     </link>
   
     <joint name="${laser_name}_frame_joint" type="fixed">
-      <origin rpy="0 0 0" xyz="0.03 0 0.05"/>
+      <origin rpy="0 0 0" xyz="0 0 0.06"/>
       <parent link="${laser_name}_link"/>
       <child link="${laser_name}_frame"/>
     </joint>
     <!-- Laser Scan -->
-    <gazebo reference="laser_scan_frame">
+    <gazebo reference="${laser_name}_frame">
       <sensor name="sensor_ray" type="ray">
         <pose>0 0 0 0 0 0</pose>
         <ray>
@@ -63,10 +63,9 @@
         <plugin name="laser" filename="libgazebo_ros_ray_sensor.so">
           <ros>
             <remapping>~/out:=scan</remapping>
-            <robot_base_frame>base_link</robot_base_frame>
-            <frame_name>laser_scan_frame</frame_name>
           </ros>
           <output_type>sensor_msgs/LaserScan</output_type>
+          <frame_name>${laser_name}_frame</frame_name>
         </plugin>
       </sensor>
     </gazebo>

@@ -154,7 +154,7 @@
 
   <!-- Laser Scan -->
   <xacro:if value="$(arg include_laser)">
-    <xacro:laser laser_name="laser_scan" joint_origin="0.12 0 0.0775" />
+    <xacro:laser laser_name="laser_scan" joint_origin="0.13 0 0.0775" />
   </xacro:if>
 
   <!-- </xacro:if> -->
