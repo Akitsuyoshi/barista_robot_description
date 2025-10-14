@@ -43,11 +43,18 @@ def generate_launch_description():
         default_value=[os.path.join(pkg_barista_robot, 'worlds', 'empty.world'), ''], 
         description='SDF world file')
 
+    gazebo_launch_args = {
+        'verbose': 'false',
+        'pause': 'false',
+        'world': LaunchConfiguration('world')
+    }
+
     # Gazebo launch
     gazebo = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(pkg_gazebo_ros, 'launch', 'gazebo.launch.py'),
-        )
+        ),
+        launch_arguments=gazebo_launch_args.items(),
     )
 
     include_laser = LaunchConfiguration('include_laser')
@@ -66,7 +73,7 @@ def generate_launch_description():
     rsp_robot1 = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
-        name='robot_state_publisher',
+        name='robot_state_publisher_robot1',
         namespace=robot_name_1,
         emulate_tty=True,
         parameters=[{'frame_prefix': robot_name_1+'/', 
@@ -77,7 +84,7 @@ def generate_launch_description():
     rsp_robot2 = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
-        name='robot_state_publisher',
+        name='robot_state_publisher_robot2',
         namespace=robot_name_2,
         emulate_tty=True,
         parameters=[{'frame_prefix': robot_name_2+'/', 
@@ -90,14 +97,30 @@ def generate_launch_description():
     spawn_robot1 = Node(
         package='gazebo_ros',
         executable='spawn_entity.py',
+        name="spawn_robot1",
         arguments=['-entity', robot_name_1, '-x', '0.0', '-y', '0.0', '-z', '0.0',
                    '-topic', robot_name_1+'/robot_description']
     )
     spawn_robot2 = Node(
         package='gazebo_ros',
         executable='spawn_entity.py',
+        name="spawn_robot2",
         arguments=['-entity', robot_name_2, '-x', '1.0', '-y', '1.0', '-z', '0.0',
                    '-topic', robot_name_2+'/robot_description']
+    )
+
+    # Statif tf from world
+    static_tf_robot1 = Node(
+        package='tf2_ros',
+        executable='static_transform_publisher',
+        name='static_tf_world_robot1',
+        arguments=['0', '0', '0', '0', '0', '0', 'world', robot_name_1 + '/odom']
+    )
+    static_tf_robot2 = Node(
+        package='tf2_ros',
+        executable='static_transform_publisher',
+        name='static_tf_world_robot2',
+        arguments=['1.0', '1.0', '0', '0', '0', '0', 'world', robot_name_2 + '/odom']
     )
 
     # RVIZ Configuration
@@ -122,6 +145,8 @@ def generate_launch_description():
             rsp_robot2,
             spawn_robot1,
             spawn_robot2,
+            static_tf_robot1,
+            static_tf_robot2,
             rviz_node
         ]
     )
