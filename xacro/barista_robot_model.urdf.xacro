@@ -11,7 +11,12 @@
   <xacro:include filename="$(find barista_robot_description)/xacro/laser_scanner.xacro" />
 
   <gazebo reference="base_link">
-    <material>Gazebo/Blue</material>
+    <xacro:if value="${robot_name == 'morty'}">
+      <material>Gazebo/Blue</material>
+    </xacro:if>
+    <xacro:if value="${robot_name == 'rick'}">
+      <material>Gazebo/Red</material>
+    </xacro:if>
   </gazebo>
 
   <material name="black">
@@ -43,7 +48,12 @@
       <geometry>
         <cylinder length="0.155" radius="0.178" />
       </geometry>
-      <material name="blue" />
+      <xacro:if value="${robot_name == 'morty'}">
+        <material name="blue" />
+      </xacro:if>
+      <xacro:if value="${robot_name == 'rick'}">
+        <material name="red" />
+      </xacro:if>
     </visual>
     <collision>
       <geometry>
@@ -88,7 +98,7 @@
   <xacro:standoff standoff_name="standoff_4" joint_origin="-0.1 0.1 0.0775" />
   
   <!-- Tray -->
-  <xacro:cupholder cupholder_name="tray" joint_origin="0 0 0.2975" />
+  <xacro:cupholder cupholder_name="tray" joint_origin="0 0 0.2975" robot_name="${robot_name}"/>
 
   <!-- Laser Scan -->
   <xacro:if value="$(arg include_laser)">

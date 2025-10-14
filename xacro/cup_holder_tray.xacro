@@ -1,8 +1,13 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="barista_robot">
-  <xacro:macro name="cupholder" params="cupholder_name joint_origin">
+  <xacro:macro name="cupholder" params="cupholder_name joint_origin robot_name">
     <gazebo reference="${cupholder_name}">
-      <material>Gazebo/Blue</material>
+      <xacro:if value="${robot_name == 'morty'}">
+        <material>Gazebo/Blue</material>
+      </xacro:if>
+      <xacro:if value="${robot_name == 'rick'}">
+        <material>Gazebo/Red</material>
+      </xacro:if>
     </gazebo>
     <link name="${cupholder_name}">
       <visual>
@@ -10,7 +15,12 @@
         <geometry>
           <cylinder length="0.09" radius="0.16"/>
         </geometry>
-        <material name="blue" />
+        <xacro:if value="${robot_name == 'morty'}">
+          <material name="blue" />
+        </xacro:if>
+        <xacro:if value="${robot_name == 'rick'}">
+          <material name="red" />
+        </xacro:if>
       </visual>
       <collision>
         <origin xyz="0 0 0.045"/>
