@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="barista_robot">
-  <xacro:macro name="laser" params="laser_name joint_origin">
+  <xacro:macro name="laser" params="laser_name joint_origin robot_name">
     <gazebo reference="${laser_name}_link">
       <material>Gazebo/Gray</material>
     </gazebo>
@@ -65,6 +65,7 @@
         <update_rate>30.0</update_rate>
         <plugin name="laser" filename="libgazebo_ros_ray_sensor.so">
           <ros>
+            <namespace>/${robot_name}</namespace>
             <remapping>~/out:=scan</remapping>
           </ros>
           <output_type>sensor_msgs/LaserScan</output_type>

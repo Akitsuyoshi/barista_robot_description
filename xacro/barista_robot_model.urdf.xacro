@@ -2,6 +2,7 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="barista_robot">
 
   <xacro:arg name="include_laser" default="true"/>
+  <xacro:property name="robot_name" value="$(arg robot_name)"/>
   
   <xacro:include filename="$(find barista_robot_description)/xacro/drive_wheel.xacro" />
   <xacro:include filename="$(find barista_robot_description)/xacro/caster_wheel.xacro" />
@@ -91,7 +92,7 @@
 
   <!-- Laser Scan -->
   <xacro:if value="$(arg include_laser)">
-    <xacro:laser laser_name="laser_scan" joint_origin="0.13 0 0.0775" />
+    <xacro:laser laser_name="laser_scan" joint_origin="0.13 0 0.0775" robot_name="${robot_name}" />
   </xacro:if>
 
   <!-- </xacro:if> -->
@@ -101,7 +102,8 @@
   <gazebo>
     <plugin name="barista_bot_joint_state" filename="libgazebo_ros_joint_state_publisher.so">
     <ros>
-        <remapping>~/out:=joint_states</remapping>
+      <namespace>/${robot_name}</namespace>
+      <remapping>~/out:=joint_states</remapping>
     </ros>
     <update_rate>30</update_rate>
     <joint_name>joint_left_wheel</joint_name>
@@ -118,6 +120,10 @@
   <!-- Differential Drive Controller -->
   <gazebo>      
     <plugin filename="libgazebo_ros_diff_drive.so" name="differential_drive_controller">  
+    <ros>
+      <namespace>/${robot_name}</namespace>
+      <remapping>/cmd_vel:=cmd_vel</remapping>
+    </ros>
     <!-- wheels -->
     <left_joint>joint_left_wheel</left_joint>
     <right_joint>joint_right_wheel</right_joint>  
@@ -130,8 +136,8 @@
     <!-- output -->
     <publish_odom>true</publish_odom>
     <publish_odom_tf>true</publish_odom_tf>  
-    <odometry_frame>odom</odometry_frame>
-    <robot_base_frame>base_footprint</robot_base_frame>
+    <odometry_frame>${robot_name}/odom</odometry_frame>
+    <robot_base_frame>${robot_name}/base_footprint</robot_base_frame>
     <update_rate>30</update_rate>
     </plugin>
   </gazebo>
