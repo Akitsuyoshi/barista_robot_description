@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="barista_robot">
   <xacro:macro name="cupholder" params="cupholder_name joint_origin">
+    <gazebo reference="${cupholder_name}">
+      <material>Gazebo/Blue</material>
+    </gazebo>
     <link name="${cupholder_name}">
       <visual>
         <origin xyz="0 0 0.045"/>
