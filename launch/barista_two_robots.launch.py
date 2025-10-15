@@ -120,7 +120,7 @@ def generate_launch_description():
         package='tf2_ros',
         executable='static_transform_publisher',
         name='static_tf_world_robot2',
-        arguments=['1.0', '1.0', '0', '0', '0', '0', 'world', robot_name_2 + '/odom']
+        arguments=['0.0', '0.0', '0', '0', '0', '0', 'world', robot_name_2 + '/odom']
     )
 
     # RVIZ Configuration
